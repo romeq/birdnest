@@ -31,6 +31,7 @@ func (a *Drone) GetPilot(source string) (pilot Pilot) {
 	}
 
 	json.Unmarshal(pilotResponse, &pilot)
+	pilot.Drone = *a
 	return pilot
 }
 

@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	BASEURL = "https://assignments.reaktor.com/birdnest"
-	pilots  = []api.Pilot{}
+	BASEURL      = "https://assignments.reaktor.com/birdnest"
+	pilotStorage = []api.Pilot{}
 )
 
 type DataSources struct {
@@ -44,22 +44,32 @@ func fetchData(config DataSources) (report api.DroneReport) {
 
 	for _, drone := range violating {
 		pilot := drone.GetPilot(config.Pilots)
-		pilot.Drone = drone
 		pilot.ViolationDate = time.Now()
 
-		if !lo.ContainsBy(pilots, func(a api.Pilot) bool {
+		if !lo.ContainsBy(pilotStorage, func(a api.Pilot) bool {
 			return a.PilotId == pilot.PilotId
 		}) {
-			pilots = append(pilots, pilot)
+			pilot.Drone.SmallestDistance = pilot.Drone.LatestDistance
+			pilotStorage = append(pilotStorage, pilot)
 		} else {
-			pilot.Drone = drone
+			_, index, _ := lo.FindIndexOf(pilotStorage, func(item api.Pilot) bool {
+				return item.PilotId == pilot.PilotId
+			})
+
+			pilotStorage[index].Drone.LatestDistance = pilot.Drone.LatestDistance
+
+			sm := pilotStorage[index].Drone.SmallestDistance
+			ld := pilotStorage[index].Drone.LatestDistance
+			if ld <= sm {
+				pilotStorage[index].Drone.SmallestDistance = ld
+			}
 		}
 	}
 
-	pilots = lo.Filter(pilots, func(item api.Pilot, _ int) bool {
+	pilotStorage = lo.Filter(pilotStorage, func(item api.Pilot, _ int) bool {
 		return item.ViolationDate.After(time.Now().Add(-time.Minute * 10))
 	})
 
-	web.SetSourceData(pilots)
+	web.SetSourceData(pilotStorage)
 	return report
 }
