@@ -24,7 +24,12 @@ type Drone struct {
 }
 
 func (a *Drone) GetPilot(source string) (pilot Pilot) {
-	pilotResponse := request(fmt.Sprintf("%s/%s", source, a.SerialNumber))
+	pilotResponse, err := request(fmt.Sprintf("%s/%s", source, a.SerialNumber))
+	if err != nil {
+		log.Println(err)
+		return Pilot{}
+	}
+
 	json.Unmarshal(pilotResponse, &pilot)
 	return pilot
 }
@@ -42,7 +47,12 @@ type DroneReport struct {
 }
 
 func GetReport(source string) (drones DroneReport) {
-	res := request(source)
+	res, err := request(source)
+	if err != nil {
+		log.Println(err)
+		return DroneReport{}
+	}
+
 	if err := xml.Unmarshal(res, &drones); err != nil {
 		log.Fatalln(err)
 	}

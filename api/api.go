@@ -2,27 +2,26 @@ package api
 
 import (
 	"io"
-	"log"
 	"net/http"
 )
 
-func request(source string) []byte {
+func request(source string) (body []byte, err error) {
 	httpClient := &http.Client{}
 
 	req, err := http.NewRequest("GET", source, nil)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 
 	response, err := httpClient.Do(req)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 
-	body, err := io.ReadAll(response.Body)
+	body, err = io.ReadAll(response.Body)
 	if err != nil {
-		log.Fatalln(err)
+		return nil, err
 	}
 
-	return body
+	return body, err
 }
