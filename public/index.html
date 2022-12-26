@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NDZ Violators</title>
+    </head>
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        ul#violators {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul#violators li.violator {
+            background: hsl(0, 0%, 95%);
+            white-space: nowrap;
+            overflow-x: auto;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        li.violator h3 {
+            color: hsl(0, 0%, 30%);
+            font-weight: 600;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+        li.violator p {
+            margin: 0;
+        }
+        li.violator ul {
+            margin-top: 10px;
+        }
+    </style>
+    <body>
+        <h2>NDZ Violators</h2>
+        <p>
+            List below got the information of each person that has violated the no drone zone (NDZ) during the
+            last 10 minutes.
+        </p>
+        <ul id="violators"></ul>
+
+        <script>
+            const fetchData = async () => {
+                const f = await fetch("/json")
+                const d = await f.json()
+
+                const violators = document.getElementById("violators")
+                while (violators.lastChild) {
+                    violators.removeChild(violators.lastChild)
+                }
+
+                for (let i = 0; i < d.length; i++) {
+                    const item = d[i]
+
+                    let li = document.createElement("li")
+                    li.className = "violator"
+
+                    const lin = document.createElement("h3")
+                    lin.innerHTML = `${item["firstName"]} ${item["lastName"]}`
+
+                    const pilotId = document.createElement("p")
+                    pilotId.innerHTML = `Pilot ID: ${item.pilotId}`
+
+                    const violdate = document.createElement("p")
+                    violdate.innerHTML = `Violation Date: ${item.violationDate}`
+
+                    const lad = document.createElement("p")
+                    lad.innerHTML = `Latest distance: ${Math.floor(item.Drone.LatestDistance)} meters`
+
+                    const mind = document.createElement("p")
+                    mind.innerHTML = `Smallest distance: ${Math.floor(item.Drone.SmallestDistance)} meters`
+
+                    const contacts = document.createElement("ul")
+
+                    const phoneNumber = document.createElement("li")
+                    phoneNumber.innerHTML = `Phone: <a href="callto:${item.phoneNumber}">${item.phoneNumber}</a>`
+
+                    const mail = document.createElement("li")
+                    mail.innerHTML = `Mail: <a href="mailto:${item.email}">${item.email}</a>`
+
+                    contacts.append(phoneNumber, mail)
+                    li.append(lin, violdate, pilotId, lad, mind, contacts)
+                    violators.appendChild(li)
+                }
+            }
+
+            ;(async () => {
+                await fetchData()
+                setInterval(async () => await fetchData(), 2000)
+            })()
+        </script>
+    </body>
+</html>
