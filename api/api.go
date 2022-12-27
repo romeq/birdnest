@@ -6,22 +6,11 @@ import (
 )
 
 func request(source string) (body []byte, err error) {
-	httpClient := &http.Client{}
-
-	req, err := http.NewRequest("GET", source, nil)
+	resp, err := http.Get(source)
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
-	response, err := httpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	body, err = io.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return body, err
+	return io.ReadAll(resp.Body)
 }
