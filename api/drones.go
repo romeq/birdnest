@@ -50,12 +50,13 @@ type DroneReport struct {
 func GetReport(source string) (drones DroneReport) {
 	res, err := request(source)
 	if err != nil {
-		log.Println(err)
+		log.Println("error:", err)
 		return DroneReport{}
 	}
 
 	if err := xml.Unmarshal(res, &drones); err != nil {
-		log.Fatalln(err)
+		log.Println("error:", err)
+		return DroneReport{}
 	}
 
 	return drones
