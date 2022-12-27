@@ -1,13 +1,14 @@
-<div style="display: flex;
+<div style="display: flex">
+    <div style="display: flex;
             justify-content: space-between;
             gap: 40px;">
-	<div>
-    	<h1>Birdnest - Reaktor Assignment</h1>
+    <div>
+        <h1>Birdnest</h1>
 
         <p>
             My solution to Reaktor's summer job <a href="https://assignments.reaktor.com/birdnest">pre-assignment</a>.
         </p>
-    
+
         <h3>
             What?
         </h3>
@@ -23,13 +24,13 @@
             The challenge was itself quite fun and I really enjoyed doing it. That said, unarguably the best part was getting to solve a problem using technologies that I knew well.
         </p>
     </div>
-    
-    <img style="width: 30%;
-                border-radius: 10px;
-                " src="/home/toke/.config/Typora/typora-user-images/image-20221227230951332.png"></img>
+
+    <img style="width: 40%;
+                border-radius: 10px;" 
+         src="/home/toke/.config/Typora/typora-user-images/image-20221227230951332.png"></img>
 </div>
 
-## Running this app
+### Running this app
 
 **NOTE**: The webserver will start at port 8080 except if configured otherwise
 
@@ -56,4 +57,4 @@ You're able to run this program by compiling the binary or building a docker ima
 
 ### Caveats
 
-- The website is not the most optimized as it always rerenders all pilots on each update.
+- The website is not the most optimized as it always re-renders all pilots on each view update.
