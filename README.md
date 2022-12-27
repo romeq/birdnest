@@ -1,34 +1,14 @@
-<div style="display: flex">
-    <div style="display: flex;
-            justify-content: space-between;
-            gap: 40px;">
-    <div>
-        <h1>Birdnest</h1>
+# Birdnest
+My solution to Reaktor's summer job <a href="https://assignments.reaktor.com/birdnest">pre-assignment</a>.
 
-        <p>
-            My solution to Reaktor's summer job <a href="https://assignments.reaktor.com/birdnest">pre-assignment</a>.
-        </p>
+### What?
+For summer-trainee role Reaktor requires a solution for their custom-made pre-assignment which you can get to from the link above. 
+As I was highly interested in the challenge, I decided to take a look at it.
+This repository contains a few words of mine in addition to the code and solution to the challenge.
 
-        <h3>
-            What?
-        </h3>
-        <p>
-            For summer-trainee role Reaktor requires a solution for their custom-made pre-assignment which you can get to from the link above. 
-            As I was highly interested in the challenge, I decided to take a look at it.
-            This repository contains a few words of mine in addition to the code and solution to the challenge.
-        </p>
-        <h3>
-            A few simple words
-        </h3>
-        <p>
-            The challenge was itself quite fun and I really enjoyed doing it. That said, unarguably the best part was getting to solve a problem using technologies that I knew well.
-        </p>
-    </div>
+### A few simple words
+The challenge was itself quite fun and I really enjoyed doing it. That said, unarguably the best part was getting to solve a problem using technologies that I knew well.
 
-    <img style="width: 40%;
-                border-radius: 10px;" 
-         src="/home/toke/.config/Typora/typora-user-images/image-20221227230951332.png"></img>
-</div>
 
 ### Running this app
 
