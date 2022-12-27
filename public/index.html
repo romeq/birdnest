@@ -48,19 +48,21 @@
 
         <script>
             const fetchData = async () => {
-                const f = await fetch("/json")
-                const d = await f.json()
+                const req = await fetch("/json")
+                const responseBody = await req.json()
 
-                const violators = document.getElementById("violators")
-                while (violators.lastChild) {
-                    violators.removeChild(violators.lastChild)
+                const violatorsEl = document.getElementById("violators")
+
+                while (violatorsEl.lastChild) {
+                    violatorsEl.removeChild(violatorsEl.lastChild)
                 }
-
-                for (let i = 0; i < d.length; i++) {
-                    const item = d[i]
+                
+                for (let i = 0; i < responseBody.length; i++) {
+                    const item = responseBody[i]
 
                     let li = document.createElement("li")
                     li.className = "violator"
+                    li.setAttribute("pilot", item.pilotId)
 
                     const lin = document.createElement("h3")
                     lin.innerHTML = `${item["firstName"]} ${item["lastName"]}`
@@ -87,13 +89,13 @@
 
                     contacts.append(phoneNumber, mail)
                     li.append(lin, violdate, pilotId, lad, mind, contacts)
-                    violators.appendChild(li)
+                    violatorsEl.appendChild(li)
                 }
             }
 
             ;(async () => {
                 await fetchData()
-                setInterval(async () => await fetchData(), 500)
+                setInterval(async () => await fetchData(), 2000)
             })()
         </script>
     </body>
